@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        // 元々存在しているusersテーブルを削除
+        Schema::drop('users');
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('user_name')->nullable();

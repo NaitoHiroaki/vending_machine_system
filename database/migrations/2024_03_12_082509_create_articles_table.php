@@ -27,28 +27,28 @@ return new class extends Migration
 
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('company_id', 255);
-            $table->string('product_name', 20);
-            $table->string('price', 20);
-            $table->string('stock', 20);
-            $table->string('comment', 200)->nullable();
-            $table->longText('img_path')->nullable();
+            $table->unsignedBigInteger('company_id');
+            $table->string('product_name', 255);
+            $table->integer('price');
+            $table->integer('stock');
+            $table->text('comment')->nullable();
+            $table->string('img_path', 255)->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
 
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id', 255);
+            $table->unsignedBigInteger('product_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
 
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name', 20);
-            $table->string('street_address', 200);
-            $table->string('representative_name', 20);
+            $table->string('company_name', 255);
+            $table->string('street_address', 255)->nullable();
+            $table->string('representative_name', 255)->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

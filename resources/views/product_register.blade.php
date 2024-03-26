@@ -8,18 +8,22 @@
 
                 <div class="card-body">
                     <div class="h1 mb-4">商品新規登録画面</div>
-                    <form id="form-area" class="form-inline" method="post">
+                    <form id="form-area" class="form-inline" method="post" action="{{ route('store') }}">
+                        @csrf
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="product-name">商品名</label>
-                                <input id="product-name" name="namae" type="text" class="form-control">
+                                <label for="product_name">商品名
+                                    @include('required',['rules' => $rules['product_name'] ?? ''])
+                                </label>
+                                <input id="product_name" name="product_name" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="maker-name">メーカー名</label>
-                                <!-- <input id="maker-name" name="namae" type="text" class="form-control"> -->
-                                <select id="maker-name" name="namae" class="form-control">
+                                <label for="maker_name">メーカー名
+                                    @include('required',['rules' => $rules['maker_name'] ?? ''])
+                                </label>
+                                <select id="maker_name" name="maker_name" class="form-control">
                                     <option value="">選択してください</option>
                                     <option value="1">Coca-Cola</option>
                                     <option value="2">サントリー</option>
@@ -29,35 +33,43 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="price">価格</label>
-                                <input id="price" name="namae" type="text" class="form-control">
+                                <label for="price">価格
+                                    @include('required',['rules' => $rules['price'] ?? ''])
+                                </label>
+                                <input id="price" name="price" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="stock">在庫数</label>
-                                <input id="stock" name="namae" type="text" class="form-control">
+                                <label for="stock">在庫数
+                                    @include('required',['rules' => $rules['stock'] ?? ''])
+                                </label>
+                                <input id="stock" name="stock" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="comment">コメント</label>
-                                <textarea id="comment" name="namae"></textarea>
+                                <label for="comment">コメント
+                                    @include('required',['rules' => $rules['comment'] ?? ''])
+                                </label>
+                                <textarea id="comment" name="comment"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="img_path">商品画像</label>
-                                <input id="img_path" name="namae" type="file" multiple accept="image/*" >
+                                <label for="img_path">商品画像
+                                    @include('required',['rules' => $rules['img_path'] ?? ''])
+                                </label>
+                                <input id="img_path" name="img-path" type="file" multiple accept="image/*" >
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-warning">
+                            新規登録
+                        </button>
+                        <button type="submit" class="btn btn-info">
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('戻る') }}</a>
+                        </button>
                     </form>
-                    <button type="submit" class="btn btn-warning">
-                        <a class="nav-link" href="{{ route('home') }}">{{ __('新規登録') }}</a>
-                    </button>
-                    <button type="submit" class="btn btn-info">
-                        <a class="nav-link" href="{{ route('home') }}">{{ __('戻る') }}</a>
-                    </button>
                 </div>
             </div>
         </div>

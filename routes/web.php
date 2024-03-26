@@ -20,4 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/product_register', [App\Http\Controllers\ProductRegisterController::class, 'index'])->name('product_register');
+
+Route::middleware(['auth'])
+->controller(App\Http\Controllers\ProductRegisterController::class)
+->group(function(){ 
+    Route::get('/product_register', 'index')->name('product_register');
+    Route::post('/product_register', 'store')->name('store');
+    Route::get('/home/{id}', 'show')->name('show');
+    Route::post('/destroy{id}', 'destroy')->name('destroy');
+});

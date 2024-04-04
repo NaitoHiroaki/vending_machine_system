@@ -26,8 +26,8 @@ class StoreProductRegisterRequest extends FormRequest
         return [
             'product_name' => ['required'],
             'maker_name' => ['required'],
-            'price' => ['required'],
-            'stock' => ['required']
+            'price' => ['required', 'integer'],
+            'stock' => ['required', 'integer']
         ];
     }
 }

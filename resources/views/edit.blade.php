@@ -7,9 +7,15 @@
             <div class="card">
 
                 <div class="card-body">
-                    <div class="h1 mb-4">商品新規登録画面</div>
-                    <form id="form-area" class="form-inline" method="post" action="{{ route('store') }}" enctype="multipart/form-data">
+                    <div class="h1 mb-4">商品情報編集画面</div>
+                    <form id="form-area" class="form-inline" method="post" action="{{ route('update', ['id' => $product->id ]) }}" enctype="multipart/form-data">
                         @csrf
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="id">ID</label>
+                                <div>{{ $product->id }}.</div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <label for="product_name">商品名
@@ -64,10 +70,10 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-warning">
-                            新規登録
+                            更新
                         </button>
                         <button type="submit" class="btn btn-info">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('戻る') }}</a>
+                            <a class="nav-link" href="{{ route('show', ['id' => $product->id ] ) }}">{{ __('戻る') }}</a>
                         </button>
                     </form>
                 </div>

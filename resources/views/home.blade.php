@@ -5,8 +5,6 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <!-- <div class="card-header">{{ __('Dashboard') }}</div> -->
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -15,7 +13,26 @@
                     @endif
 
                     <div class="h1 mb-4">商品一覧画面</div>
-                    <!-- {{ __('You are logged in!') }} -->
+                    <form class="mb-4" method="get" action="{{ route('home') }}">
+                        <input type="text" name="search" placeholder="検索キーワード">
+                        <select name="select">
+                            <option value="">メーカー名</option>
+                            @foreach($maker_names as $maker_name)
+                                <option value="{{ $maker_name }}" @if($select == $maker_name) selected @endif>
+                                    @if($maker_name === "1")
+                                    Coca-Cola
+                                    @endif
+                                    @if($maker_name === "2")
+                                    サントリー
+                                    @endif
+                                    @if($maker_name === "3")
+                                    キリン
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="submit" value="検索">
+                    </form>
                     <table id="table" border="1">
                         <thead>
                         <tr>
@@ -38,7 +55,14 @@
                         @foreach($products as $product)
                         <tr>
                             <td>{{ $product->id }}.</td>
-                            <td>商品画像</td>
+                            <td>
+                                @if ($product->img_path === null)
+                                なし
+                                @endif
+                                @if ($product->img_path !== null)
+                                あり
+                                @endif
+                            </td>
                             <td>{{ $product->product_name }}</td>
                             <td>¥{{ $product->price }}</td>
                             <td>{{ $product->stock }}</td>
@@ -56,12 +80,12 @@
                             <td>
                                 <div class="text-center">
                                 <button type="submit" class="btn btn-info">
-                                    <a class="nav-link" href="{{ route('show', ['id' => $product->id ] ) }}">{{ __('詳細') }}</a>
+                                    <a class="nav-link" href="{{ route('show', ['id' => $product->id] ) }}">{{ __('詳細') }}</a>
                                 </button>
                                 </div>
                             </td>
                             <td>
-                                <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
+                                <form action="{{ route('destroy', ['id' => $product->id] ) }}" method="post">
                                     @csrf
                                     <div class="text-center">
                                     <button type="submit" class="btn btn-danger">削除</button>
@@ -72,6 +96,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>

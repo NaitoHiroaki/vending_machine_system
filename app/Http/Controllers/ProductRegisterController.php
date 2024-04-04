@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductRegister;
 use App\Http\Requests\StoreProductRegisterRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductRegisterController extends Controller
 {
@@ -14,23 +15,58 @@ class ProductRegisterController extends Controller
     public function index()
     {
         $validation = new StoreProductRegisterRequest();
+        
         return view('product_register', [
             'rules' => $validation->rules(),
         ]);
-
-        return view('product_register');
     }
 
     public function store(StoreProductRegisterRequest $request)
     {
-        ProductRegister::create([
-            'product_name' => $request->product_name,
-            'maker_name' => $request->maker_name,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'comment' => $request->comment,
-            'img_path' => $request->img_path
-        ]);
+
+        // 画像フォームでリクエストした画像を取得
+        $img = $request->file('img_path');
+
+        // 画像情報がセットされていれば、保存処理を実行
+        if (isset($img)) {
+            // 拡張子付きでファイル名を取得
+            $filenameWithExt = $request->file('img_path')->getClientOriginalName();
+
+            // ファイル名のみを取得
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            // 拡張子を取得
+            $extension = $request->file('img_path')->getClientOriginalExtension();
+
+            // 保存のファイル名を構築
+            $filenameToStore = $filename."_".date('Ymd_His').".".$extension;
+
+            // 画像フォームでリクエストした画像を取得してstorage > public > img配下に画像を保存
+            $path = $request->file('img_path')->storeAs("public/img", $filenameToStore);
+            
+            // store処理が実行できたらDBに保存処理を実行
+            if ($path) {
+                // DBに登録する処理
+                ProductRegister::create([
+                    'product_name' => $request->product_name,
+                    'maker_name' => $request->maker_name,
+                    'price' => $request->price,
+                    'stock' => $request->stock,
+                    'comment' => $request->comment,
+                    'img_path' => $path
+                ]);
+            }
+        }
+
+        if (!isset($img)) {
+            ProductRegister::create([
+                'product_name' => $request->product_name,
+                'maker_name' => $request->maker_name,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'comment' => $request->comment
+            ]);
+        }
 
         return to_route('product_register');
     }
@@ -39,10 +75,78 @@ class ProductRegisterController extends Controller
     {
         $product = ProductRegister::find($id);
 
-        // $gender = CheckFormService::checkGender($contact);
-        // $age = CheckFormService::checkAge($contact);
-
         return view('show', compact('product'));
+    }
+
+    public function edit($id)
+    {
+        $product = ProductRegister::find($id);
+        $validation = new StoreProductRegisterRequest();
+
+        return view('edit', compact('product'), [
+            'rules' => $validation->rules()
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        
+        // 画像ファイルインスタンス取得
+        $img = $request->file('img_path');
+        $product = ProductRegister::find($id);
+
+        // 現在の画像へのパスをセット
+        $path = $request->img_path;
+        
+        // 現在の画像へのパスをセット
+        if (isset($img)) {
+            
+            // 現在の画像ファイルの削除
+            $img_name = $product->img_path;
+            $product->delete($path);
+
+            // /storage/app/public/img/画像ファイル名を削除
+            $img_name = str_replace('public/img/', '', $img_name);
+            Storage::disk('public')->delete('img/' . $img_name);
+
+            // 拡張子付きでファイル名を取得
+            $filenameWithExt = $request->file('img_path')->getClientOriginalName();
+
+            // ファイル名のみを取得
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            // 拡張子を取得
+            $extension = $request->file('img_path')->getClientOriginalExtension();
+
+            // 保存のファイル名を構築
+            $filenameToStore = $filename."_".date('Ymd_His').".".$extension;
+
+            // 画像フォームでリクエストした画像を取得してstorage > public > img配下に画像を保存
+            $path = $request->file('img_path')->storeAs("public/img", $filenameToStore);
+
+            $product->product_name = $request->product_name;
+            $product->maker_name = $request->maker_name;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+            $product->comment = $request->comment;
+            $product->img_path = $path;
+            $product->save();
+        }
+
+        if (!isset($img)) {
+
+            // 現在の画像ファイルの削除
+            // $product->delete($path);
+
+            $product->product_name = $request->product_name;
+            $product->maker_name = $request->maker_name;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+            $product->comment = $request->comment;
+            $product->save();
+        }
+
+        return to_route('edit', ['id' => $product->id ] );
     }
 
     public function destroy($id)

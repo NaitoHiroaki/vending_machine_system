@@ -26,6 +26,8 @@ Route::middleware(['auth'])
 ->group(function(){ 
     Route::get('/product_register', 'index')->name('product_register');
     Route::post('/product_register', 'store')->name('store');
-    Route::get('/home/{id}', 'show')->name('show');
-    Route::post('/destroy{id}', 'destroy')->name('destroy');
+    Route::get('/{id}', 'show')->name('show');
+    Route::post('/{id}', 'update')->name('update');
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::post('/{id}/destroy', 'destroy')->name('destroy');
 });

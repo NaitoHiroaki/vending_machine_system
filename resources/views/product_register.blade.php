@@ -9,6 +9,11 @@
                     <div class="h1 mb-4">商品新規登録画面</div>
                     <form id="form-area" class="shadow-md rounded-md bg-white" method="post" action="{{ route('store') }}" enctype="multipart/form-data">
                         @csrf
+                        <div class="pt-3">
+                            @foreach($errors->all() as $message)
+                                <p class="ml-4 text-danger">{{$message}}</p>
+                            @endforeach
+                        </div>
                         <div class="mb-4">
                             <label for="product_name" class="mb-2 ml-4 text-sm font-medium text-gray-900 w-1/6"><b>商品名</b>
                                 @include('required',['rules' => $rules['product_name'] ?? ''])

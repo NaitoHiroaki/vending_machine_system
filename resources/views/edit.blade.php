@@ -9,6 +9,11 @@
                     <div class="h1 mb-4">商品情報編集画面</div>
                     <form id="form-area" class="shadow-md rounded-md bg-white" method="post" action="{{ route('update', ['id' => $product->id ]) }}" enctype="multipart/form-data">
                         @csrf
+                        <div class="pt-3">
+                            @foreach($errors->all() as $message)
+                                <p class="ml-4 text-danger">{{$message}}</p>
+                            @endforeach
+                        </div>
                         <div>
                             <label for="id" class="mb-2 ml-4 text-sm font-medium text-gray-900 w-1/6"><b>ID</b></label>
                             <div class="inline-block bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-3/5 p-2.5 mt-4">

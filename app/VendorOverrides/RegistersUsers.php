@@ -33,6 +33,7 @@ trait RegistersUsers
 
         event(new Registered($user = $this->create($request->all())));
 
+        // ↓ ユーザーの新規登録をしたとき自動ログインしないようにコメントアウト
         // $this->guard()->login($user);
 
         if ($response = $this->registered($request, $user)) {

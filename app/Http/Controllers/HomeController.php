@@ -33,6 +33,7 @@ class HomeController extends Controller
             "2",  // サントリー
             "3"   // キリン
         ];
+
         $select = $request->input('select'); 
         if($select !== null) {
             $query->where('maker_name', '=', $select);
@@ -41,6 +42,6 @@ class HomeController extends Controller
         $products = $query->select('id', 'img_path', 'product_name', 'price', 'stock', 'maker_name')
         ->get();
 
-        return view('home', compact('products', 'maker_names', 'select'));
+        return view('home', compact('maker_names', 'select', 'products'));
     }
 }

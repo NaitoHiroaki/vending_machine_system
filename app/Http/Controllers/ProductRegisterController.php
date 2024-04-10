@@ -95,7 +95,7 @@ class ProductRegisterController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreProductRegisterRequest $request, $id)
     {
         
         // 画像ファイルインスタンス取得

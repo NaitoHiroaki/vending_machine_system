@@ -32,7 +32,7 @@
                         </select>
                         <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 w-1/6 p-2.5 ml-2 hover:bg-gray-200 shadow-md" type="submit" value="検索">
                     </form>
-                    <div class="relative overflow-x-auto shadow-md rounded-md mb-2">
+                    <div class="relative overflow-x-auto shadow-md rounded-md mb-3">
                     <table class="w-full">
                         <thead class="text-gray-700 bg-gray-200">
                         <tr>
@@ -97,6 +97,7 @@
                         </tbody>
                     </table>
                     </div>
+                    {{ $products->appends(request()->query())->links() }}
                 </div>
             </div>
         </div>

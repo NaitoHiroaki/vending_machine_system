@@ -40,7 +40,7 @@ class HomeController extends Controller
         }
 
         $products = $query->select('id', 'img_path', 'product_name', 'price', 'stock', 'maker_name')
-        ->get();
+        ->paginate(10);
 
         return view('home', compact('maker_names', 'select', 'products'));
     }

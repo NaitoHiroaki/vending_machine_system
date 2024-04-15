@@ -20,7 +20,7 @@
                                 <div>なし</div>
                                 @endif
                                 @if ($product->img_path !== null)
-                                <img src="{{ Storage::url($product->img_path) }}">
+                                <img class="sm:h-32 lg:h-40" src="{{ Storage::url($product->img_path) }}">
                                 @endif
                             </td>
                         </tr>

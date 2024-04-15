@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductRegister;
+use App\Models\Product;
+use App\Models\Sale;
 use App\Http\Requests\StoreProductRegisterRequest;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Models\Company;
 
 class ProductRegisterController extends Controller
 {
@@ -15,9 +17,10 @@ class ProductRegisterController extends Controller
     public function index()
     {
         $validation = new StoreProductRegisterRequest();
+        $companies = Company::all();
         
-        return view('product_register', [
-            'rules' => $validation->rules(),
+        return view('product_register', compact('companies'), [
+            'rules' => $validation->rules()
         ]);
     }
 
@@ -46,17 +49,21 @@ class ProductRegisterController extends Controller
             $path = $img->storeAs("public/img", $filename_to_store);
 
             // リサイズされた画像を保存
-            Image::make($img)->resize(450, 300, function ($constraint) {
-                $constraint->aspectRatio();
-            } )
-            ->save(storage_path('app/public/img/'. $filename_to_store));
+            Image::make($img)->resize(
+                450, // 横幅
+                300, // 縦幅
+                function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                } 
+            )->save(storage_path('app/public/img/'. $filename_to_store));
 
             // store処理が実行できたらDBに保存処理を実行
             if ($path) {
                 // DBに登録する処理
-                ProductRegister::create([
+                Product::create([
                     'product_name' => $request->product_name,
-                    'maker_name' => $request->maker_name,
+                    'company_id' => $request->company_id,
                     'price' => $request->price,
                     'stock' => $request->stock,
                     'comment' => $request->comment,
@@ -66,31 +73,40 @@ class ProductRegisterController extends Controller
         }
 
         if (!isset($img)) {
-            ProductRegister::create([
+            Product::create([
                 'product_name' => $request->product_name,
-                'maker_name' => $request->maker_name,
+                'company_id' => $request->company_id,
                 'price' => $request->price,
                 'stock' => $request->stock,
                 'comment' => $request->comment
             ]);
         }
 
+        // 最新のデータを取得
+        $product = Product::orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->first();
+        
+        Sale::create([
+            'product_id' => $product->id,
+        ]);
+
         return to_route('product_register');
     }
 
     public function show($id)
     {
-        $product = ProductRegister::find($id);
+        $product = Product::find($id);
+        $companies = Company::all();
 
-        return view('show', compact('product'));
+        return view('show', compact('product', 'companies'));
     }
 
     public function edit($id)
     {
-        $product = ProductRegister::find($id);
+        $product = Product::find($id);
+        $companies = Company::all();
         $validation = new StoreProductRegisterRequest();
 
-        return view('edit', compact('product'), [
+        return view('edit', compact('product', 'companies'), [
             'rules' => $validation->rules()
         ]);
     }
@@ -98,7 +114,7 @@ class ProductRegisterController extends Controller
     public function update(StoreProductRegisterRequest $request, $id)
     {
         
-        $product = ProductRegister::find($id);
+        $product = Product::find($id);
 
         // 既存画像を取得
         $path = $request->img_path;
@@ -111,7 +127,6 @@ class ProductRegisterController extends Controller
             
             // 現在の画像ファイルの削除
             $img_name = $product->img_path;
-            $product->delete($path);
 
             // /storage/app/public/img/画像ファイル名 を削除
             $img_name = str_replace('public/img/', '', $img_name);
@@ -133,12 +148,17 @@ class ProductRegisterController extends Controller
             $path = $img->storeAs("public/img", $filename_to_store);
 
             // リサイズされた画像を保存
-            Image::make($img)->resize(450, 300, function ($constraint) {
-                $constraint->aspectRatio();
-            } )->save(storage_path('app/public/img/'. $filename_to_store));
+            Image::make($img)->resize(
+                450, // 横幅
+                300, // 縦幅
+                function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                } 
+            )->save(storage_path('app/public/img/'. $filename_to_store));
 
             $product->product_name = $request->product_name;
-            $product->maker_name = $request->maker_name;
+            $product->company_id = $request->company_id;
             $product->price = $request->price;
             $product->stock = $request->stock;
             $product->comment = $request->comment;
@@ -150,7 +170,7 @@ class ProductRegisterController extends Controller
         if (!isset($img)) {
 
             $product->product_name = $request->product_name;
-            $product->maker_name = $request->maker_name;
+            $product->company_id = $request->company_id;
             $product->price = $request->price;
             $product->stock = $request->stock;
             $product->comment = $request->comment;
@@ -162,7 +182,11 @@ class ProductRegisterController extends Controller
 
     public function destroy($id)
     {
-        $product = ProductRegister::find($id);
+        $product = Product::find($id);
+        $product_id = $product->id;
+        $sale = Sale::where('product_id', $product_id);
+
+        $sale->delete();
         $product->delete();
 
         // 画像フォームでリクエストした画像を取得

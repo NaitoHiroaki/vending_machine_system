@@ -31,15 +31,11 @@
                         <tr>
                             <td class="border-t px-4 py-2"><b>メーカー</b></td>
                             <td class="border-t px-4 py-2">
-                                @if($product->maker_name === "1")
-                                Coca-Cola
-                                @endif
-                                @if($product->maker_name === "2")
-                                サントリー
-                                @endif
-                                @if($product->maker_name === "3")
-                                キリン
-                                @endif
+                                @foreach ($companies as $company)
+                                    @if($product->company_id === $company->id)
+                                    {{ $company->company_name }}
+                                    @endif
+                                @endforeach
                             </td>
                         </tr>
                         <tr>

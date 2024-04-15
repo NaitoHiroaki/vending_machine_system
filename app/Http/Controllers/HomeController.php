@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProductRegister;
+use App\Models\Product;
+use App\Models\Company;
 
 class HomeController extends Controller
 {
@@ -26,22 +27,18 @@ class HomeController extends Controller
     {
 
         $search = $request->search;
-        $query = ProductRegister::search($search);
+        $query = Product::search($search);
 
-        $maker_names = [
-            "1",  // Coca-Cola
-            "2",  // サントリー
-            "3"   // キリン
-        ];
+        $companies = Company::all();
 
         $select = $request->input('select'); 
         if($select !== null) {
-            $query->where('maker_name', '=', $select);
+            $query->where('company_id', '=', $select);
         }
 
-        $products = $query->select('id', 'img_path', 'product_name', 'price', 'stock', 'maker_name')
+        $products = $query->select('id', 'img_path', 'product_name', 'price', 'stock', 'company_id')
         ->paginate(10);
 
-        return view('home', compact('maker_names', 'select', 'products'));
+        return view('home', compact('companies', 'select', 'products'));
     }
 }

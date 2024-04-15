@@ -25,7 +25,7 @@ class StoreProductRegisterRequest extends FormRequest
     {
         return [
             'product_name' => ['required'],
-            'maker_name' => ['required'],
+            'company_id' => ['required'],
             'price' => ['required', 'integer'],
             'stock' => ['required', 'integer']
         ];
@@ -35,7 +35,7 @@ class StoreProductRegisterRequest extends FormRequest
     {
         return [
             'product_name.required' => '* 商品名は必須です',
-            'maker_name.required' => '* メーカー名は必須です',
+            'company_id.required' => '* メーカー名は必須です',
             'price.required' => '* 価格は必須です',
             'price.integer' => '* 価格は半角で入力してください',
             'stock.required' => '* 在庫数は必須です',

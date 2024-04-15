@@ -21,14 +21,14 @@
                             <input id="product_name" name="product_name" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-3/5 p-2.5 mt-4"/>
                         </div>
                         <div class="mb-4">
-                            <label for="maker_name" class="mb-2 ml-4 text-sm font-medium text-gray-900 w-1/6"><b>メーカー名</b>
-                                @include('required',['rules' => $rules['maker_name'] ?? ''])
+                            <label for="company_id" class="mb-2 ml-4 text-sm font-medium text-gray-900 w-1/6"><b>メーカー名</b>
+                                @include('required',['rules' => $rules['company_id'] ?? ''])
                             </label>
-                            <select id="maker_name" name="maker_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-3/5 p-2.5">
+                            <select id="company_id" name="company_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-3/5 p-2.5">
                                 <option value="">選択してください</option>
-                                <option value="1">Coca-Cola</option>
-                                <option value="2">サントリー</option>
-                                <option value="3">キリン</option>
+                                @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-4">

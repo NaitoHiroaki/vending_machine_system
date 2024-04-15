@@ -11,6 +11,26 @@
                         @csrf
                         <div class="row mb-4">
                             <div class="col-md-12">
+                                <input id="name" type="text" class="bg-gray-200 text-gray-700 form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="ユーザ名">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <input id="email" type="email" class="bg-gray-200 text-gray-700 form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="メールアドレス">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
                                 <input id="password" type="password" class="bg-gray-200 text-gray-700 form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="パスワード">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -21,12 +41,7 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-12">
-                                <input id="email" type="email" class="bg-gray-200 text-gray-700 form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="アドレス">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password-confirm" type="password" class="bg-gray-200 form-control" name="password_confirmation" required autocomplete="new-password" placeholder="パスワード(確認用)">
                             </div>
                         </div>
                         <div class="row mb-1">

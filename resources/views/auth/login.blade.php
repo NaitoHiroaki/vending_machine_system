@@ -11,8 +11,8 @@
                         @csrf
                         <div class="row mb-4">
                             <div class="col-md-12">
-                                <input id="password" type="password" class="bg-gray-200 text-gray-700 form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="パスワード">
-                                @error('password')
+                                <input id="email" type="email" class="bg-gray-200 text-gray-700 form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="メールアドレス">
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -21,8 +21,8 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-12">
-                                <input id="email" type="email" class="bg-gray-200 text-gray-700 form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="アドレス">
-                                @error('email')
+                                <input id="password" type="password" class="bg-gray-200 text-gray-700 form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="パスワード">
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

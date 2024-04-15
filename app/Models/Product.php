@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductRegister extends Model
+class Product extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'company_id',
         'product_name',
-        'maker_name',
         'price',
         'stock',
         'comment',
@@ -19,6 +19,16 @@ class ProductRegister extends Model
     ];
 
     protected $table = "products";
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function Company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 
     public function scopeSearch($query, $search)
     {

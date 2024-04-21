@@ -53,8 +53,9 @@
                             <label for="img_path" class="mb-2 ml-4 text-sm font-medium text-gray-900 w-1/6 pt-2"><b>商品画像</b>
                                 @include('required',['rules' => $rules['img_path'] ?? ''])
                             </label>
-                            <input id="img_path" name="img_path" type="file" multiple accept="image/*" class="w-3/5 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-primary-500 file:py-2.5 file:px-4 file:text-sm file:font-medium file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"/>
+                            <input id="img_path" name="img_path" type="file" onChange="imgPreView(event)" multiple accept="image/*" class="w-3/5 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-primary-500 file:py-2.5 file:px-4 file:text-sm file:font-medium file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"/>
                         </div>
+                        <div id="preview"></div>
                         <button type="submit" class="btn bg-amber-500 hover:bg-amber-400 shadow-md text-white px-3 ml-3.5 mr-4 mt-2 mb-3">
                             新規登録
                         </button>
@@ -67,4 +68,32 @@
         </div>
     </div>
 </div>
+
+<script>
+function imgPreView(event){
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    var preview = document.getElementById("preview");
+    var previewImage = document.getElementById("previewImage");
+    
+    if(previewImage != null)
+    preview.removeChild(previewImage);
+
+    reader.onload = function(event) {
+        var img = document.createElement("img");
+        img.setAttribute("src", reader.result);
+        img.setAttribute("id", "previewImage");
+        preview.appendChild(img);
+        preview.classList.add('flex');
+        preview.classList.add('justify-left');
+        preview.classList.add('sm:h-32');
+        preview.classList.add('lg:h-40');
+        preview.classList.add('mb-2');
+        preview.classList.add('ml-6');
+    };
+
+  reader.readAsDataURL(file);
+}    
+</script>
+
 @endsection

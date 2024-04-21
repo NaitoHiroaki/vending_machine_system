@@ -196,7 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // Add Intervention Image.
-        Intervention\Image\ImageServiceProvider::class,
+        // Intervention\Image\ImageServiceProvider::class,
 
     ],
 

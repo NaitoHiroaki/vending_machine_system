@@ -36,7 +36,8 @@ class Product extends Model
             $search_split = mb_convert_kana($search, 's'); // 全角スペースを半角
             $search_split2 = preg_split('/[\s]+/', $search_split); //空白で区切る
             foreach( $search_split2 as $value ){
-                $query->where('product_name', 'like', '%' .$value. '%'); 
+                $value_esc = '%' . addcslashes($value, '%_\\') . '%'; // キーワードのメタ文字をエスケープして商品名を検索
+                $query->where('product_name', 'like', '%' .$value_esc. '%');
             }
         }
         return $query;

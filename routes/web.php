@@ -20,10 +20,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/searchName={searchName?}/selectCompany={selectCompany?}/maxPrice={maxPrice?}/minPrice={minPrice?}/maxStock={maxStock?}/minStock={minStock?}', [App\Http\Controllers\HomeController::class, 'extractProduct'])
+->where('searchName', '.*')
+->where('selectCompany', '.*')
+->where('maxPrice', '.*')
+->where('minPrice', '.*')
+->where('maxStock', '.*')
+->where('minStock', '.*')
+->name('extract_product');
 
 Route::get('/product_register', [App\Http\Controllers\ProductRegisterController::class, 'index'])->name('product_register');
 Route::post('/product_register', [App\Http\Controllers\ProductRegisterController::class, 'store'])->name('store');
 Route::get('/{id}', [App\Http\Controllers\ProductRegisterController::class, 'show'])->name('show');
 Route::post('/{id}', [App\Http\Controllers\ProductRegisterController::class, 'update'])->name('update');
 Route::get('/{id}/edit', [App\Http\Controllers\ProductRegisterController::class, 'edit'])->name('edit');
-Route::post('/{id}/destroy', [App\Http\Controllers\ProductRegisterController::class, 'destroy'])->name('destroy');
+Route::delete('/{id}/destroy', [App\Http\Controllers\ProductRegisterController::class, 'destroy'])->name('destroy');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Sale;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRegisterRequest;
 use Illuminate\Support\Facades\Storage;
 // use Intervention\Image\Facades\Image;
@@ -83,11 +84,11 @@ class ProductRegisterController extends Controller
             }
 
             // 最新のデータを取得
-            $product = Product::orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->first();
+            // $product = Product::orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->first();
             
-            Sale::create([
-                'product_id' => $product->id,
-            ]);
+            // Sale::create([
+            //     'product_id' => $product->id,
+            // ]);
 
             return to_route('product_register');
         } catch (\Exception $e) {
@@ -192,10 +193,10 @@ class ProductRegisterController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         try {
-            $product = Product::find($id);
+            $product = Product::find($request->id);
             $product_id = $product->id;
             $sale = Sale::where('product_id', $product_id);
 
@@ -213,11 +214,10 @@ class ProductRegisterController extends Controller
                 Storage::disk('public')->delete('img/' . $img_name);
             }
 
-            return to_route('home');
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
             report($e);
-            session()->flash('flash_message', '更新が失敗しました');
+            return response()->json(['error' => '削除に失敗しました'], 500);
         }
     }
-
 }

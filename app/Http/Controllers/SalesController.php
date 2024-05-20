@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Sale;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
     public function purchase(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             // リクエストから必要なデータを取得
             $productId = $request->input('product_id');
@@ -37,12 +40,14 @@ class SalesController extends Controller
             ]);
 
             $sale->save();
+            DB::commit();  //データベースに反映
 
             return response()->json(['message' => '購入成功']);
 
         } catch (\Exception $e) {
             report($e);
             session()->flash('flash_message', '更新が失敗しました');
+            DB::rollback();
         }
     }
 }

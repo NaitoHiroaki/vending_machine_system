@@ -111,6 +111,9 @@
                         </tbody>
                     </table>
                     </div>
+                    <div id="pagination-container" class="pagination-container">
+                        {{ $products->appends(request()->query())->links() }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,12 +144,6 @@
 </style>
 
 <script>
-function deletePost(e) {
-    'use strict';
-    if (confirm('本当に削除していいですか?')) {
-        document.getElementById('delete_' + e.dataset.id).submit();
-    }
-}
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -179,6 +176,10 @@ $(document).ready(function() {
         }).done(function (data) {
             let newTable = $(data).find('.product-table');
             $('.product-table').replaceWith(newTable);
+
+            // ページネーションのリンクを更新
+            let paginationHtml = $(data).find('.pagination-container').html();
+            $('.pagination-container').html(paginationHtml);
 
             // テーブルが更新された後にテーブルソーターを再初期化
             $('#fav-table').tablesorter({
@@ -383,6 +384,20 @@ function bindDeleteButton() {
                 // 通信が成功した場合、クリックした要素の親要素の <tr> を削除
                 var deletedRow = clickEle.closest('tr');
                 deletedRow.hide(); // 削除した行を一時的に非表示にする
+
+                // ページネーション部分を非同期で更新する
+                $.ajax({
+                    type: 'GET',
+                    url: window.location.href, // 現在のURLに対して再度GETリクエストを送信
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    var paginationHtml = $(data).find('#pagination-container').html();
+                    $('#pagination-container').html(paginationHtml);
+                })
+                .fail(function() {
+                    alert('ページネーションの更新に失敗しました');
+                });
             })
             .fail(function() {
                 alert('削除に失敗しました');

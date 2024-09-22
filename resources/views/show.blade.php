@@ -7,7 +7,7 @@
             <div class="card shadow-md">
                 <div class="card-body">
                     <div class="h1 mb-4">商品情報詳細画面</div>
-                    <table class="w-2/3 mb-4 shadow-md rounded-md bg-white">
+                    <table class="w-full sm:w-2/3 mb-4 shadow-md rounded-md bg-white">
                         <tbody>
                         <tr>
                             <td class="px-4 py-2"><b>ID</b></td>
@@ -20,7 +20,7 @@
                                 <div>なし</div>
                                 @endif
                                 @if ($product->img_path !== null)
-                                <img class="sm:h-32 lg:h-40" src="{{ Storage::url($product->img_path) }}">
+                                <img class="h-32 lg:h-40" src="{{ Storage::url($product->img_path) }}">
                                 @endif
                             </td>
                         </tr>

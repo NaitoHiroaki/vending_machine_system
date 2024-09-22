@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/home/searchName={searchName?}/selectCompany={selectCompany?}/maxPrice={maxPrice?}/minPrice={minPrice?}/maxStock={maxStock?}/minStock={minStock?}', [App\Http\Controllers\HomeController::class, 'extractProduct'])
-// ->where('searchName', '.*')
-// ->where('selectCompany', '.*')
-// ->where('maxPrice', '.*')
-// ->where('minPrice', '.*')
-// ->where('maxStock', '.*')
-// ->where('minStock', '.*')
-// ->name('extract_product');
 Route::get('/filter', [App\Http\Controllers\HomeController::class, 'filter'])->name('filter');
 
 Route::get('/product_register', [App\Http\Controllers\ProductRegisterController::class, 'index'])->name('product_register');

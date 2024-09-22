@@ -12,13 +12,13 @@
                         </div>
                     @endif
                     <div class="h1 mb-4">商品一覧画面</div>
-                    <form id="search-form" class="mb-4 flex items-center" method="get" action="{{ route('home') }}">
-                        <div class="flex flex-col mr-2">
+                    <form id="search-form" class="mb-3 flex flex-wrap items-center" method="get" action="{{ route('home') }}">
+                        <div class="flex flex-col w-full sm:w-auto sm:mr-0 lg:mr-2">
                             <div class="flex mb-2.5">
-                                <input class="w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="search_name" id="search_name" value="" placeholder="検索キーワード">
+                                <input class="w-full sm:w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="search_name" id="search_name" value="" placeholder="検索キーワード">
                             </div>
-                            <div class="flex">
-                                <select class="w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" name="select_company" id="select_company">
+                            <div class="flex mb-2.5">
+                                <select class="w-full sm:w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" name="select_company" id="select_company">
                                     <option value="">メーカー名</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}">{{ $company->company_name }}</option>
@@ -26,30 +26,30 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="flex flex-col mx-2">
+                        <div class="flex flex-col w-full sm:w-auto sm:mx-0 lg:mx-2">
                             <div class="flex mb-2.5">
-                                <input class="w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="max_price" id="max_price" value="" placeholder="価格上限">
+                                <input class="w-full sm:w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="max_price" id="max_price" value="" placeholder="価格上限">
                             </div>
-                            <div class="flex">
-                                <input class="w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="min_price" id="min_price" value="" placeholder="価格下限">
+                            <div class="flex mb-2.5">
+                                <input class="w-full sm:w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="min_price" id="min_price" value="" placeholder="価格下限">
                             </div>
                         </div>
-                        <div class="flex flex-col mx-2">
+                        <div class="flex flex-col w-full sm:w-auto sm:mx-0 lg:mx-2">
                             <div class="flex mb-2.5">
-                                <input class="w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="max_stock" id="max_stock" value="" placeholder="在庫上限">
+                                <input class="w-full sm:w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="max_stock" id="max_stock" value="" placeholder="在庫上限">
                             </div>
-                            <div class="flex">
-                                <input class="w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="min_stock" id="min_stock" value="" placeholder="在庫下限">
+                            <div class="flex mb-2.5">
+                                <input class="w-full sm:w-40 bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text" name="min_stock" id="min_stock" value="" placeholder="在庫下限">
                             </div>
                         </div>
-                        <div class="flex flex-col ml-2">
+                        <div class="flex flex-col w-full sm:w-auto sm:ml-0 lg:ml-2">
                             <div class="flex mb-2.5">
-                                <button class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 w-fit p-2.5 hover:bg-gray-200 shadow-md" type="submit">
+                                <button class="w-full sm:w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5 hover:bg-gray-200 shadow-md" type="submit">
                                     <a class="nav-link" href="{{ route('home' ) }}">{{ __('クリア') }}</a>
                                 </button>
                             </div>
-                            <div class="flex">
-                                <button class="w-20 search-icon bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 w-fit p-2.5 hover:bg-gray-200 shadow-md" type="button">検索</button>
+                            <div class="flex mb-2.5">
+                                <button class="w-full sm:w-20 search-icon bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 p-2.5 hover:bg-gray-200 shadow-md" type="button">検索</button>
                             </div>
                         </div>
                     </form>
@@ -102,11 +102,16 @@
                                 </div>
                             </td>
                             <td class="border-t pl-0.5 pr-4 py-2">
-                                <form>
+                                <!-- <form>
                                     <input data-user_id="{{ $product->id }}" type="submit" class="btn bg-rose-500 hover:bg-rose-400 shadow-md text-white btn-dell" value="削除">
+                                </form> -->
+                                <form action="{{ route('destroy', ['id' => $product->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button data-user_id="{{ $product->id }}" type="submit" class="btn bg-rose-500 hover:bg-rose-400 shadow-md text-white btn-dell">削除</button>
                                 </form>
                             </td>
-                        </tr>                    
+                        </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -149,7 +154,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': '{{ csrf_token() }}'
     }
 });
-// 新バージョン↓
+
 $(document).ready(function() {
     $('#fav-table').tablesorter({
         headers: {
@@ -195,6 +200,52 @@ $(document).ready(function() {
         });
     });
 });
+
+// 削除ボタンのクリックイベントを再度バインドする関数
+function bindDeleteButton() {
+    $('.btn-dell').off('click').on('click', function(e) {
+        e.preventDefault(); // ボタンのデフォルトの動作を無効化
+        var deleteConfirm = confirm('本当に削除していいですか?');
+        if(deleteConfirm == true) {
+            var clickEle = $(this);
+            var userID = clickEle.attr('data-user_id');
+            $.ajax({
+                type: 'POST', // ルーティングをPOSTに変更
+                url: '/'+userID+'/destroy',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'id': userID,
+                    "_method": "DELETE"
+                },
+                dataType: 'json',
+            })
+            .done(function() {
+                // 通信が成功した場合、クリックした要素の親要素の <tr> を削除
+                var deletedRow = clickEle.closest('tr');
+                deletedRow.hide(); // 削除した行を一時的に非表示にする
+
+                // ページネーション部分を非同期で更新する
+                $.ajax({
+                    type: 'GET',
+                    url: window.location.href, // 現在のURLに対して再度GETリクエストを送信
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    var paginationHtml = $(data).find('#pagination-container').html();
+                    $('#pagination-container').html(paginationHtml);
+                })
+                .fail(function() {
+                    alert('ページネーションの更新に失敗しました');
+                });
+            })
+            .fail(function() {
+                alert('削除に失敗しました');
+            });
+        }
+    });
+}
 
 // 旧バージョン↓
 // $(document).ready(function() {
@@ -359,52 +410,6 @@ $(document).ready(function() {
 //         alert("通信に失敗しました");
 //     });
 // }
-
-// 削除ボタンのクリックイベントを再度バインドする関数
-function bindDeleteButton() {
-    $('.btn-dell').off('click').on('click', function(e) {
-        e.preventDefault(); // ボタンのデフォルトの動作を無効化
-        var deleteConfirm = confirm('本当に削除していいですか?');
-        if(deleteConfirm == true) {
-            var clickEle = $(this);
-            var userID = clickEle.attr('data-user_id');
-            $.ajax({
-                type: 'POST', // ルーティングをPOSTに変更
-                url: '/'+userID+'/destroy',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    'id': userID,
-                    "_method": "DELETE"
-                },
-                dataType: 'json',
-            })
-            .done(function() {
-                // 通信が成功した場合、クリックした要素の親要素の <tr> を削除
-                var deletedRow = clickEle.closest('tr');
-                deletedRow.hide(); // 削除した行を一時的に非表示にする
-
-                // ページネーション部分を非同期で更新する
-                $.ajax({
-                    type: 'GET',
-                    url: window.location.href, // 現在のURLに対して再度GETリクエストを送信
-                    dataType: 'html'
-                })
-                .done(function(data) {
-                    var paginationHtml = $(data).find('#pagination-container').html();
-                    $('#pagination-container').html(paginationHtml);
-                })
-                .fail(function() {
-                    alert('ページネーションの更新に失敗しました');
-                });
-            })
-            .fail(function() {
-                alert('削除に失敗しました');
-            });
-        }
-    });
-}
 </script>
 
 @endsection

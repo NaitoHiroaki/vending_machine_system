@@ -12,6 +12,17 @@
                         </div>
                     @endif
                     <div class="h1 mb-4">商品一覧画面</div>
+                    @if (session('success_message'))
+                        <div class="alert alert-success">
+                            {{ session('success_message') }}
+                        </div>
+                    @endif
+
+                    @if (session('error_message'))
+                        <div class="alert alert-danger">
+                            {{ session('error_message') }}
+                        </div>
+                    @endif
                     <form id="search-form" class="mb-3 flex flex-wrap items-center" method="get" action="{{ route('home') }}">
                         <div class="flex flex-col w-full sm:w-auto sm:mr-0 lg:mr-2">
                             <div class="flex mb-2.5">

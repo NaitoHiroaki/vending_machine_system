@@ -90,10 +90,12 @@ class ProductRegisterController extends Controller
             //     'product_id' => $product->id,
             // ]);
 
-            return to_route('product_register');
+            session()->flash('success_message', '登録が成功しました');
+
+            return to_route('home');
         } catch (\Exception $e) {
             report($e);
-            session()->flash('flash_message', '更新が失敗しました');
+            session()->flash('error_message', '登録が失敗しました');
         }
     }
 
@@ -186,10 +188,13 @@ class ProductRegisterController extends Controller
                 $product->save();
             }
 
-            return to_route('edit', ['id' => $product->id ] );
+            session()->flash('success_message', '更新が成功しました');
+
+            return to_route('show', ['id' => $product->id ] );
         } catch (\Exception $e) {
             report($e);
-            session()->flash('flash_message', '更新が失敗しました');
+            session()->flash('error_message', '更新が失敗しました');
+            return back();
         }
     }
 

@@ -7,6 +7,17 @@
             <div class="card shadow-md">
                 <div class="card-body">
                     <div class="h1 mb-4">商品情報詳細画面</div>
+                    @if (session('success_message'))
+                        <div class="alert alert-success">
+                            {{ session('success_message') }}
+                        </div>
+                    @endif
+
+                    @if (session('error_message'))
+                        <div class="alert alert-danger">
+                            {{ session('error_message') }}
+                        </div>
+                    @endif
                     <table class="w-full sm:w-2/3 mb-4 shadow-md rounded-md bg-white">
                         <tbody>
                         <tr>

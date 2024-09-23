@@ -63,7 +63,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <table id="table" Frame="Void">
+                    <table class="flex justify-center" id="table" Frame="Void">
                         <tr>
                         <td>
                             <div class="text-center">

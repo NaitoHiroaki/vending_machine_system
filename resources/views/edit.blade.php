@@ -67,12 +67,14 @@
                         @endif
                         </div>
                         <div id="preview"></div>
-                        <button type="submit" class="btn bg-amber-500 hover:bg-amber-400 shadow-md text-white px-3 ml-3.5 mr-4 mt-2 mb-3">
-                            更新
-                        </button>
-                        <button type="submit" class="btn bg-cyan-500 hover:bg-cyan-400 shadow-md text-white px-4 mt-2 mb-3">
-                            <a class="nav-link" href="{{ route('show', ['id' => $product->id ] ) }}">{{ __('戻る') }}</a>
-                        </button>
+                        <div class="flex justify-center">
+                            <button type="submit" class="btn bg-amber-500 hover:bg-amber-400 shadow-md text-white px-3 ml-3.5 mr-4 mt-2 mb-3">
+                                更新
+                            </button>
+                            <button type="submit" class="btn bg-cyan-500 hover:bg-cyan-400 shadow-md text-white px-4 mt-2 mb-3">
+                                <a class="nav-link" href="{{ route('show', ['id' => $product->id ] ) }}">{{ __('戻る') }}</a>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
